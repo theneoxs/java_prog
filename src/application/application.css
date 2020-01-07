@@ -1,0 +1,25 @@
+.background {
+-fx-background-color: #dddddd;
+}
+.table-view {
+-fx-control-inner-background: #dddddd;
+}
+.label-header {
+-fx-font-size: 18pt;
+-fx-text-fill: blue;
+-fx-opacity: 1;
+}
+.label {
+-fx-font-size: 10pt;
+-fx-text-fill: blue;
+-fx-opacity: 0.5;
+}
+.button:hover {
+-fx-background-color: lightblue;
+}
+.button:pressed, .button:hover:pressed {
+-fx-background-color: blue;
+}
+.button:focused {
+-fx-border-color: lightblue, lightblue;
+}

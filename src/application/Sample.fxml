@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="299.0">
+               <children>
+                  <TableView fx:id="tvTech" layoutX="-12.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="tcIdTech" prefWidth="75.0" text="ID Tech" />
+                      <TableColumn fx:id="tcName" prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="tcModel" prefWidth="75.0" text="Model" />
+                        <TableColumn fx:id="tcDate" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="tcCost" prefWidth="75.0" text="Cost" />
+                        <TableColumn fx:id="tcRoomNum" prefWidth="75.0" text="Room Number" />
+                        <TableColumn fx:id="tcMatRespID" prefWidth="75.0" text="Mat. Resp. ID" />
+                        <TableColumn fx:id="tcSubDivID" prefWidth="75.0" text="Subdividion ID" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label layoutX="181.0" layoutY="165.0" styleClass="label-header" text="Technic details" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <GridPane layoutX="74.0" layoutY="75.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="30.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="lIdTech" text="ID Technic" />
+                        <Label fx:id="lName" text="Name" GridPane.rowIndex="1" />
+                        <Label fx:id="lModel" text="Model" GridPane.rowIndex="2" />
+                        <Label fx:id="lDate" text="Date" GridPane.rowIndex="3" />
+                        <TextField fx:id="tfIdTech" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfModel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="lCost" text="Cost" GridPane.rowIndex="4" />
+                        <Label fx:id="lRoomNum" text="Room Number" GridPane.rowIndex="5" />
+                        <Label fx:id="lMatRespID" text="Material Responsible ID" GridPane.rowIndex="6" />
+                        <Label fx:id="lSubDivID" text="Subdividion ID" GridPane.rowIndex="7" />
+                        <TextField fx:id="tfCost" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="tfRoomNum" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="cbMRID" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="cbSID" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <TextField fx:id="tfDate" GridPane.columnIndex="1" GridPane.rowIndex="3" />                        
+                     </children>
+                  </GridPane>
+                  <ButtonBar buttonMinWidth="90.0" layoutX="145.0" layoutY="244.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                    <buttons>
+                      <Button fx:id="bNew" mnemonicParsing="false" onAction="#handleNew" text="New" />
+                        <Button fx:id="bEdit" mnemonicParsing="false" onAction="#handleUpd" text="Edit" />
+                        <Button fx:id="bDelete" mnemonicParsing="false" onAction="#handleDel" text="Delete" />
+                    </buttons>
+                  </ButtonBar>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

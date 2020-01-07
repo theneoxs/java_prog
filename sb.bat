@@ -1,0 +1,1 @@
+"java.exe" -jar "%C:\Users\Lulz\git\java_prog\scenebuilder-8.4.1-all.jar" %*
