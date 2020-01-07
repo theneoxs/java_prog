@@ -17,7 +17,7 @@ public class Database {
 	public Database() {
 		this.conn = null;
 	}
-	// Открывает соединение. Возвращает true если открылосью
+	// Открывает соединение. Возвращает true если открылось
 	public boolean openConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -41,7 +41,7 @@ public class Database {
 		this.conn = null;
 	}
 	
-	// Получает информацию обо всех клиентах
+	// Получает информацию обо всех экземплярах техники
 	public List<Tech> getAllTech() {
 		Statement st = null;
 		ResultSet rs = null;
@@ -141,7 +141,7 @@ public class Database {
 		}
 		return ls;
 	}
-	//создание нового клиента
+	//создание нового экземпляра техники
 	public boolean newTech(String name, String model, Date date, float cost, int room_num, int mat_resp_id, int subdividion_id) {
 		int res = 0;
 		if (openConnection()) {
@@ -200,7 +200,7 @@ public class Database {
 		}
 		return (res == 1);
 	}
-	//удаление клиента
+	//удаление техники
 	public boolean delTech(Integer idtechnic) {
 		int res = 0;
 		if (openConnection()) {

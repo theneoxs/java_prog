@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -18,6 +20,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class SampleController {
 	//Создаем атрибуты элементов сцены
@@ -52,6 +56,7 @@ public class SampleController {
 	@FXML private Button bNew;
 	@FXML private Button bEdit;
 	@FXML private Button bDelete;
+	@FXML private Button newW;
 	private Database db = new Database();
 	private SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 	//инициализация
@@ -99,6 +104,7 @@ public class SampleController {
 			cbSID.setValue(cblSID.get(0));
 		}
 	}
+	
 	//добавить новую запись в таблицу
 	@FXML
 	private void handleNew() {
