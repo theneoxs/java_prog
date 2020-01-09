@@ -191,34 +191,55 @@ public class SampleController {
 				}
 			}
 		}
-		/*if (i == 3) {
-			if (tfIdClient.getText() == null || tfIdClient.getText().length() == 0) {
+		if (i == 3) {
+			if (tfIdTech.getText() == null || tfIdTech.getText().length() == 0) {
 				errorMessage += "No valid ID!\n";
 			} else {
 				try {
-					Integer.parseInt(tfIdClient.getText());
+					Integer.parseInt(tfIdTech.getText());
 				} catch (NumberFormatException e) {
 					errorMessage += "Format ID is not a number!\n";
 				}
 			}
-			if (tfFirstName.getText() == null || tfFirstName.getText().length() == 0) {
+			if (tfName.getText() == null || tfName.getText().length() == 0) {
 				errorMessage += "No valid first name!\n";
 			}
-			if (tfLastName.getText() == null || tfLastName.getText().length() == 0) {
+			if (tfModel.getText() == null || tfModel.getText().length() == 0) {
 				errorMessage += "No valid last name!\n";
 			}
-			if (tfBirthDay.getText() == null || tfBirthDay.getText().length() == 0) {
+			if (tfDate.getText() == null || tfDate.getText().length() == 0) {
 				errorMessage += "No valid birthday!\n";
 			} else {
 				try {
-					df.parse(tfBirthDay.getText()).getTime();
+					df.parse(tfDate.getText()).getTime();
 				} catch (ParseException e) {
 					errorMessage += "Not this format! (Need YYYY-MM-DD)\n";
 				}
 			}
-
+			if (tfCost.getText() == null || tfCost.getText().length() == 0) {
+				errorMessage += "No valid cost!\n";
+			}
+			else {
+				try {
+					Float.parseFloat(tfCost.getText());
+				}
+				catch (NumberFormatException e) {
+					errorMessage += "This is not number!\n";
+				}
+			}
+			if (tfRoomNum.getText() == null || tfRoomNum.getText().length() == 0) {
+				errorMessage += "No valid room number!\n";
+			}
+			else {
+				try {
+					Integer.parseInt(tfRoomNum.getText());
+				}
+				catch (NumberFormatException e) {
+					errorMessage += "This is not number!\n";
+				}
+			}
 		}
-		*/
+	
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
