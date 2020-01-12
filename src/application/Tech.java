@@ -29,7 +29,7 @@ public class Tech {
 		this.idtechnic = new SimpleIntegerProperty(idtechnic);
 		this.name = new SimpleStringProperty(name);
 		this.model = new SimpleStringProperty(model);
-		this.date = new SimpleObjectProperty<Date>(date);;
+		this.date = new SimpleObjectProperty<Date>(date);
 		this.cost = new SimpleFloatProperty(cost);
 		this.room_num = new SimpleIntegerProperty(room_num);
 		this.mat_resp_id = new SimpleIntegerProperty(mat_resp_id);

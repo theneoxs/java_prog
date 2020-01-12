@@ -1,13 +1,14 @@
 package application;
 
-import java.lang.reflect.InvocationTargetException;
+import java.io.IOException;
 import java.sql.Date;
-import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,6 +23,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 
 public class SampleController {
 	//Создаем атрибуты элементов сцены
@@ -56,9 +59,12 @@ public class SampleController {
 	@FXML private Button bNew;
 	@FXML private Button bEdit;
 	@FXML private Button bDelete;
-	@FXML private Button newW;
+	@FXML private Button newWorker;
+	@FXML private Button newSubd;
+	@FXML private Button newTr;
 	private Database db = new Database();
 	private SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+	
 	//инициализация
 	@FXML
 	private void initialize() {
@@ -90,8 +96,8 @@ public class SampleController {
 			tfDate.setText(cl.getDate().toString());
 			tfCost.setText(Float.toString(cl.getCost()));
 			tfRoomNum.setText(Integer.toString(cl.getRoom_num()));
-			cbMRID.setValue(cblMRID.get(cl.getMat_resp_id()-1));
-			cbSID.setValue(cblSID.get(cl.getSubdividion_id()-1));
+			cbMRID.setValue(db.getWorker(cl.getMat_resp_id()));
+			cbSID.setValue(db.getSubd(cl.getSubdividion_id()));
 			
 		} else {
 			tfIdTech.setText("");
@@ -251,5 +257,60 @@ public class SampleController {
 			return false;
 		}
 	}
-	 
+	@FXML
+	private void winWorker() throws IOException {
+		Stage primaryStage = new Stage();
+		AnchorPane root = new AnchorPane();
+		
+		root = FXMLLoader.load(getClass().getResource("Worker.fxml"));
+		
+		Scene scene = new Scene(root,1000,400);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Worker");
+		primaryStage.show();
+		
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent event) {
+		    	cbMRID.setItems(FXCollections.observableArrayList(db.listAllWork()));
+		    	cbMRID.setValue(cblMRID.get(0));
+		    }
+		});
+	}
+	@FXML
+	private void winSubd() throws IOException {
+		Stage primaryStage = new Stage();
+		AnchorPane root = new AnchorPane();
+		
+		root = FXMLLoader.load(getClass().getResource("Subdividion.fxml"));
+		
+		Scene scene = new Scene(root,1000,400);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Subdividion");
+		primaryStage.show();
+		
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent event) {
+		    	cbSID.setItems(FXCollections.observableArrayList(db.listAllSubd()));
+		    	cbSID.setValue(cblSID.get(0));
+		    }
+		});
+		
+	}
+	@FXML
+	private void winTr() throws IOException {
+		Stage primaryStage = new Stage();
+		AnchorPane root = new AnchorPane();
+		
+		root = FXMLLoader.load(getClass().getResource("Transportation.fxml"));
+		
+		Scene scene = new Scene(root,1000,400);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Transportation");
+		primaryStage.show();
+	}
 }
