@@ -478,7 +478,7 @@ public class Database {
 			try {
 				st = conn.createStatement();
 				res = st.executeUpdate("update db2.worker set name ='"+name+"', surname = '"
-				+surname+"', position = '"+position+"', experience = '" + experience +"', login = '"+login+"', password = '"+password+"', subdividion_id = '"+subdividion_id+"' where idtechnic = '"+idworker+"';");
+				+surname+"', position = '"+position+"', experience = '" + experience +"', login = '"+login+"', password = '"+password+"', subdividion_id = '"+subdividion_id+"' where idworker = '"+idworker+"';");
 			} 
 			catch (SQLException e) {
 				res = 0;
@@ -710,5 +710,42 @@ public class Database {
 			}
 		}
 		return ls;
+	}
+	public boolean login(String login, String password) {
+		Statement st = null;
+		ResultSet rs = null;
+		String ls = "";
+		if (openConnection()) {
+			try {
+				st = conn.createStatement();
+				rs = st.executeQuery("select * from db2.worker where login = '"+ login + "';");
+				while (rs.next()) {
+					ls += rs.getString("password");
+				}
+			} 
+			catch (SQLException e) {
+				
+				System.out.println("SQl exception: " + e.getMessage());
+				e.printStackTrace();
+				return false;
+			} 
+			finally {
+				try {
+					if (st != null)
+						st.close();
+					closeConnection();
+				} 
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+				st = null;
+			}
+		}
+		if (ls.equals(password)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

@@ -73,7 +73,8 @@ public class ContrForWorker {
 		tcLogin.setCellValueFactory(new PropertyValueFactory<Worker, String>("login")); //6 столбик
 		tcPassword.setCellValueFactory(new PropertyValueFactory<Worker, String>("password")); //7 столбик
 		tcSubDivID.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("subdividion_id")); //8 столбик
-		
+		tcLogin.setVisible(false);
+		tcPassword.setVisible(false);
 		tvWorker.setItems(FXCollections.observableArrayList(db.getAllWorker())); //инициализация динамического массива из элементов Tech и передача соответствующей информации в столбики
 		
 		tvWorker.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showWorkerDetails(newValue)); //Прослушиватель нажатия на табличку

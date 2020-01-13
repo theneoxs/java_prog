@@ -8,14 +8,15 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Main extends Application {
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
-			Scene scene = new Scene(root,1000,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Login.fxml"));
+			Scene scene = new Scene(root,400,400);
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Technic");
+			primaryStage.setTitle("Login");
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -25,4 +26,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
 }

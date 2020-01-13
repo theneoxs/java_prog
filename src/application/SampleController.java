@@ -273,7 +273,8 @@ public class SampleController {
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		    @Override
 		    public void handle(WindowEvent event) {
-		    	cbMRID.setItems(FXCollections.observableArrayList(db.listAllWork()));
+		    	cblMRID = FXCollections.observableArrayList(db.listAllWork());
+		    	cbMRID.setItems(cblMRID);
 		    	cbMRID.setValue(cblMRID.get(0));
 		    }
 		});
@@ -294,8 +295,10 @@ public class SampleController {
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		    @Override
 		    public void handle(WindowEvent event) {
-		    	cbSID.setItems(FXCollections.observableArrayList(db.listAllSubd()));
+		    	cblSID = FXCollections.observableArrayList(db.listAllSubd());
+		    	cbSID.setItems(cblSID);
 		    	cbSID.setValue(cblSID.get(0));
+
 		    }
 		});
 		
@@ -313,4 +316,5 @@ public class SampleController {
 		primaryStage.setTitle("Transportation");
 		primaryStage.show();
 	}
+	
 }
