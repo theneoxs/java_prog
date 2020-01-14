@@ -59,7 +59,7 @@
                         <Label fx:id="lName" text="Name" GridPane.rowIndex="1" />
                         <Label fx:id="lModel" text="Model" GridPane.rowIndex="2" />
                         <Label fx:id="lDate" text="Date" GridPane.rowIndex="3" />
-                        <TextField fx:id="tfIdTech" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfIdTech" editable="false" GridPane.columnIndex="1" />
                         <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="tfModel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="lCost" text="Cost" GridPane.rowIndex="4" />

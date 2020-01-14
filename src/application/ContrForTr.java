@@ -1,8 +1,12 @@
 package application;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,7 +56,16 @@ public class ContrForTr {
 	
 	//инициализация
 	@FXML
-	private void initialize() {
+	private void initialize() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        lvl.close();
+       
+        if (level_accept.equals("Subvisor")) {
+			bNew.setVisible(false);
+			bDelete.setVisible(false);
+		}
 		cblNew_mat_resp = FXCollections.observableArrayList(db.listAllWork());
 		cbltechnic_id = FXCollections.observableArrayList(db.listAllTech());
 		cblnew_subdividion_id = FXCollections.observableArrayList(db.listAllSubd());

@@ -59,7 +59,7 @@
                         <Label fx:id="lName" text="Name" GridPane.rowIndex="1" />
                         <Label fx:id="lSurname" text="Surname" GridPane.rowIndex="2" />
                         <Label fx:id="lPosition" text="Position" GridPane.rowIndex="3" />
-                        <TextField fx:id="tfIdWorker" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfIdWorker" editable="false" GridPane.columnIndex="1" />
                         <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="tfSurname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="lExp" text="Experience" GridPane.rowIndex="4" />
@@ -73,12 +73,18 @@
                         <TextField fx:id="tfPassword" GridPane.columnIndex="1" GridPane.rowIndex="7" />                        
                      </children>
                   </GridPane>
-                  <ButtonBar buttonMinWidth="90.0" layoutX="368.0" layoutY="244.0" prefHeight="40.0" prefWidth="325.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="368.0" AnchorPane.rightAnchor="5.0">
+                  <ButtonBar buttonMinWidth="100.0" layoutX="95.0" layoutY="244.0" prefHeight="40.0" prefWidth="598.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="5.0">
                     <buttons>
                       <Button fx:id="bNew" mnemonicParsing="false" onAction="#handleNew" text="New" />
                         <Button fx:id="bEdit" mnemonicParsing="false" onAction="#handleUpd" text="Edit" />
                         <Button fx:id="bDelete" mnemonicParsing="false" onAction="#handleDel" text="Delete" />
                     </buttons>
+                  </ButtonBar>
+                  <ButtonBar buttonMinWidth="100.0" layoutX="208.0" layoutY="313.0" prefHeight="40.0" prefWidth="485.0">
+                     <buttons>
+                        <Button fx:id="bSubd" mnemonicParsing="false" onAction="#winSubd" text="Subdividion" />
+                        <Button fx:id="bTr" mnemonicParsing="false" onAction="#winTr" text="Transportation" />
+                     </buttons>
                   </ButtonBar>
                </children>
             </AnchorPane>

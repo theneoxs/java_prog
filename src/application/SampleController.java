@@ -1,10 +1,13 @@
 package application;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Date;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -67,7 +70,19 @@ public class SampleController {
 	
 	//инициализация
 	@FXML
-	private void initialize() {
+	private void initialize() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        lvl.close();
+        newWorker.setVisible(false);
+		newSubd.setVisible(false);
+		newTr.setVisible(false);
+		if (level_accept.equals("root")) {
+			newWorker.setVisible(true);
+			newSubd.setVisible(true);
+			newTr.setVisible(true);
+		}
 		cblMRID = FXCollections.observableArrayList(db.listAllWork());
 		cbMRID.setItems(cblMRID);
 		cblSID = FXCollections.observableArrayList(db.listAllSubd());

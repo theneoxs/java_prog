@@ -55,7 +55,7 @@
                         <Label fx:id="lDate_Tr" text="Date" GridPane.rowIndex="1" />
                         <Label fx:id="lStatus" text="Status" GridPane.rowIndex="2" />
                         <Label fx:id="lnew_mat_resp" text="New material Responsibe" GridPane.rowIndex="3" />
-                        <TextField fx:id="tfIdTr" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfIdTr" editable="false" GridPane.columnIndex="1" />
                         <TextField fx:id="tfDate_Tr" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="ltechnic_id" text="Technic ID" GridPane.rowIndex="4" />
                         <Label fx:id="lnew_subdividion_id" text="New Subdividion ID" GridPane.rowIndex="5" />

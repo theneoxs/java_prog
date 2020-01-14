@@ -47,17 +47,22 @@
                         <Label fx:id="lIdSubd" text="ID Technic" />
                         <Label fx:id="lFullName" text="Full Name" GridPane.rowIndex="1" />
                         <Label fx:id="lShortName" text="Short Name" GridPane.rowIndex="2" />
-                        <TextField fx:id="tfIdSubd" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfIdSubd" editable="false" GridPane.columnIndex="1" />
                         <TextField fx:id="tfFullName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="tfShortName" GridPane.columnIndex="1" GridPane.rowIndex="2" />                        
                      </children>
                   </GridPane>
-                  <ButtonBar buttonMinWidth="90.0" layoutX="368.0" layoutY="244.0" prefHeight="40.0" prefWidth="325.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="368.0" AnchorPane.rightAnchor="5.0">
+                  <ButtonBar buttonMinWidth="100.0" layoutX="160.0" layoutY="244.0" prefHeight="40.0" prefWidth="533.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="5.0">
                     <buttons>
                       <Button fx:id="bNew" mnemonicParsing="false" onAction="#handleNew" text="New" />
                         <Button fx:id="bEdit" mnemonicParsing="false" onAction="#handleUpd" text="Edit" />
                         <Button fx:id="bDelete" mnemonicParsing="false" onAction="#handleDel" text="Delete" />
                     </buttons>
+                  </ButtonBar>
+                  <ButtonBar buttonMinWidth="100.0" layoutX="493.0" layoutY="313.0" prefHeight="40.0" prefWidth="200.0">
+                     <buttons>
+                        <Button fx:id="bTr" mnemonicParsing="false" onAction="#winTr" text="Transportation" />
+                     </buttons>
                   </ButtonBar>
                </children>
             </AnchorPane>

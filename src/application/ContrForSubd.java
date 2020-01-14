@@ -1,8 +1,15 @@
 package application;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 import javafx.collections.FXCollections;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -11,6 +18,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 
 public class ContrForSubd {
@@ -29,11 +38,26 @@ public class ContrForSubd {
 	@FXML private Button bNew;
 	@FXML private Button bEdit;
 	@FXML private Button bDelete;
+	@FXML private Button bTr;
 	private Database db = new Database();
 	
 	//инициализация
 	@FXML
-	private void initialize() {
+	private void initialize() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        lvl.close();
+        bTr.setVisible(false);
+
+		if (level_accept.equals("Mainvisor")) {
+			bTr.setVisible(true);
+		}
+		else if (level_accept.equals("Subvisor")) {
+			bNew.setVisible(false);
+			bDelete.setVisible(false);
+			bEdit.setVisible(false);
+		}
 		tcIdSubd.setCellValueFactory(new PropertyValueFactory<Subd, Integer>("idsubdividion")); //1 столбик
 		tcFullName.setCellValueFactory(new PropertyValueFactory<Subd, String>("full_name")); //2 столбик
 		tcShortName.setCellValueFactory(new PropertyValueFactory<Subd, String>("short_name")); //3 столбик
@@ -130,5 +154,18 @@ public class ContrForSubd {
 			alert.showAndWait();
 			return false;
 		}
+	}
+	@FXML
+	private void winTr() throws IOException {
+		Stage primaryStage = new Stage();
+		AnchorPane root = new AnchorPane();
+		
+		root = FXMLLoader.load(getClass().getResource("Transportation.fxml"));
+		
+		Scene scene = new Scene(root,1000,400);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Transportation");
+		primaryStage.show();
 	}
 }

@@ -1,14 +1,17 @@
 package application;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Date;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class ContrForWorker {
@@ -57,11 +61,50 @@ public class ContrForWorker {
 	@FXML private Button bNew;
 	@FXML private Button bEdit;
 	@FXML private Button bDelete;
+	@FXML private Button bTr;
+	@FXML private Button bSubd;
 	private Database db = new Database();
 	
 	//инициализация
 	@FXML
-	private void initialize() {
+	private void initialize() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        lvl.close();
+		bTr.setVisible(false);
+		bSubd.setVisible(false);
+		tcLogin.setVisible(false);
+		tcPassword.setVisible(false);
+		lLogin.setVisible(false);
+		lPass.setVisible(false);
+		tfLogin.setVisible(false);
+		tfPassword.setVisible(false);
+		
+		if (level_accept.equals("Subvisor")) {
+			bTr.setVisible(true);
+			bSubd.setVisible(true);
+		}
+		else if (level_accept.equals("Administrator")) {
+			tcLogin.setVisible(true);
+			tcPassword.setVisible(true);
+			lLogin.setVisible(true);
+			lPass.setVisible(true);
+			tfLogin.setVisible(true);
+			tfPassword.setVisible(true);
+			tfName.setEditable(false);
+			tfSurname.setEditable(false);
+			tfPosition.setEditable(false);
+			tfExperience.setEditable(false);
+		}
+		else if (level_accept.equals("root")) {
+			tcLogin.setVisible(true);
+			tcPassword.setVisible(true);
+			lLogin.setVisible(true);
+			lPass.setVisible(true);
+			tfLogin.setVisible(true);
+			tfPassword.setVisible(true);
+		}
 		cblSID = FXCollections.observableArrayList(db.listAllSubd());
 		cbSID.setItems(cblSID);
 		cbSID.setValue(cblSID.get(0));
@@ -73,8 +116,6 @@ public class ContrForWorker {
 		tcLogin.setCellValueFactory(new PropertyValueFactory<Worker, String>("login")); //6 столбик
 		tcPassword.setCellValueFactory(new PropertyValueFactory<Worker, String>("password")); //7 столбик
 		tcSubDivID.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("subdividion_id")); //8 столбик
-		tcLogin.setVisible(false);
-		tcPassword.setVisible(false);
 		tvWorker.setItems(FXCollections.observableArrayList(db.getAllWorker())); //инициализация динамического массива из элементов Tech и передача соответствующей информации в столбики
 		
 		tvWorker.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showWorkerDetails(newValue)); //Прослушиватель нажатия на табличку
@@ -208,10 +249,10 @@ public class ContrForWorker {
 				}
 			}
 			if (tfLogin.getText() == null || tfLogin.getText().length() == 0) {
-				errorMessage += "No valid login!\n";
+				tfLogin.setText(tfName.getText()+"_"+tfSurname.getText());
 			}
 			if (tfPassword.getText() == null || tfPassword.getText().length() == 0) {
-				errorMessage += "No valid password!\n";
+				tfPassword.setText("***");
 			}
 		}
 	
@@ -225,6 +266,43 @@ public class ContrForWorker {
 			alert.showAndWait();
 			return false;
 		}
+	}
+	@FXML
+	private void winSubd() throws IOException {
+		Stage primaryStage = new Stage();
+		AnchorPane root = new AnchorPane();
+		
+		root = FXMLLoader.load(getClass().getResource("Subdividion.fxml"));
+		
+		Scene scene = new Scene(root,1000,400);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Subdividion");
+		primaryStage.show();
+		
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent event) {
+		    	cblSID = FXCollections.observableArrayList(db.listAllSubd());
+		    	cbSID.setItems(cblSID);
+		    	cbSID.setValue(cblSID.get(0));
+
+		    }
+		});
+		
+	}
+	@FXML
+	private void winTr() throws IOException {
+		Stage primaryStage = new Stage();
+		AnchorPane root = new AnchorPane();
+		
+		root = FXMLLoader.load(getClass().getResource("Transportation.fxml"));
+		
+		Scene scene = new Scene(root,1000,400);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Transportation");
+		primaryStage.show();
 	}
 	
 }

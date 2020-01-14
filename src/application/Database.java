@@ -1,5 +1,7 @@
 package application;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -711,16 +713,18 @@ public class Database {
 		}
 		return ls;
 	}
-	public boolean login(String login, String password) {
+	public boolean login(String login, String password) throws IOException {
 		Statement st = null;
 		ResultSet rs = null;
 		String ls = "";
+		String lvl = "";
 		if (openConnection()) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.worker where login = '"+ login + "';");
 				while (rs.next()) {
 					ls += rs.getString("password");
+					lvl += rs.getString("position");
 				}
 			} 
 			catch (SQLException e) {
@@ -742,6 +746,9 @@ public class Database {
 			}
 		}
 		if (ls.equals(password)) {
+			FileWriter file = new FileWriter("lvl");
+			file.write(lvl);
+			file.close();
 			return true;
 		}
 		else {
