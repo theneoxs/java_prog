@@ -72,6 +72,8 @@ public class ContrForWorker {
         Scanner scan = new Scanner(lvl);
         String level_accept = scan.nextLine();
         lvl.close();
+        tfIdWorker.setEditable(false);
+        tfLogin.setEditable(false);
 		bTr.setVisible(false);
 		bSubd.setVisible(false);
 		tcLogin.setVisible(false);
@@ -90,12 +92,12 @@ public class ContrForWorker {
 			tcPassword.setVisible(true);
 			lLogin.setVisible(true);
 			lPass.setVisible(true);
-			tfLogin.setVisible(true);
-			tfPassword.setVisible(true);
 			tfName.setEditable(false);
 			tfSurname.setEditable(false);
 			tfPosition.setEditable(false);
 			tfExperience.setEditable(false);
+			tfLogin.setVisible(true);
+			tfPassword.setVisible(true);
 		}
 		else if (level_accept.equals("root")) {
 			tcLogin.setVisible(true);
@@ -146,7 +148,7 @@ public class ContrForWorker {
 	
 	//добавить новую запись в таблицу
 	@FXML
-	private void handleNew() {
+	private void handleNew() throws Exception {
 		if (isInputValid(1)) {
 			db.newWorker(tfName.getText(), tfSurname.getText(), tfPosition.getText(), Integer.parseInt(tfExperience.getText()), 
 					tfLogin.getText(), tfPassword.getText(),
@@ -157,16 +159,16 @@ public class ContrForWorker {
 	}
 	//удалить строчку с id n 
 	@FXML
-	private void handleDel() {
+	private void handleDel() throws Exception {
 		if (isInputValid(2)) {
-			db.delWorker(Integer.parseInt(tfIdWorker.getText()));
+			db.delWorker(Integer.parseInt(tfIdWorker.getText()), tfLogin.getText());
 			tvWorker.setItems(FXCollections.observableArrayList(db.getAllWorker()));
 		}
 	}
 	  //обновить строку с id n на параметры
 	  
 	@FXML
-	private void handleUpd() {
+	private void handleUpd() throws Exception {
 		if (isInputValid(3)) {
 			db.updWorker(Integer.parseInt(tfIdWorker.getText()), tfName.getText(), tfSurname.getText(), tfPosition.getText(), Integer.parseInt(tfExperience.getText()), 
 					tfLogin.getText(), tfPassword.getText(),
@@ -200,10 +202,10 @@ public class ContrForWorker {
 				}
 			}
 			if (tfLogin.getText() == null || tfLogin.getText().length() == 0) {
-				errorMessage += "No valid login!\n";
+				tfLogin.setText(tfName.getText()+"_"+tfSurname.getText());
 			}
 			if (tfPassword.getText() == null || tfPassword.getText().length() == 0) {
-				errorMessage += "No valid password!\n";
+				tfPassword.setText("***");
 			}
 			
 		}

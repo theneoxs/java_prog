@@ -1,5 +1,7 @@
 package application;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javafx.collections.ObservableList;
 
@@ -23,7 +26,7 @@ public class Database {
 	public boolean openConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.conn = DriverManager.getConnection("jdbc:mysql://localhost/db2?user=u2&password=2222");
+			this.conn = DriverManager.getConnection("jdbc:mysql://localhost/db2?user=root&password=admin");
 		} 
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			System.out.println("SQL error: " + e.getMessage());
@@ -108,7 +111,7 @@ public class Database {
 		return lS;
 	}
 	// ѕолучает информацию обо всех рабочих
-		public List<Worker> getAllWorker() {
+	public List<Worker> getAllWorker() {
 			Statement st = null;
 			ResultSet rs = null;
 			List<Worker> lS = new ArrayList<Worker>();
@@ -204,7 +207,7 @@ public class Database {
 		return lWork;
 	}
 	//список техники
-		public List<String> listAllTech() {
+	public List<String> listAllTech() {
 			Statement st = null;
 			ResultSet rs = null;
 			List<String> lWork = new ArrayList<String>();
@@ -443,14 +446,34 @@ public class Database {
 		return (res == 1);
 	}
 	//—оздание нового рабочего
-	public boolean newWorker(String name, String surname, String position, Integer experience, String login, String password, int subdividion_id) {
+	public boolean newWorker(String name, String surname, String position, Integer experience, String login, String password, int subdividion_id) throws IOException {
 		int res = 0;
 		if (openConnection()) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
+				FileReader lvl= new FileReader("lvl");
+		        Scanner scan = new Scanner(lvl);
+		        String level_accept = scan.nextLine();
+		        lvl.close();
+		        if (level_accept.equals("Administrator") || level_accept.equals("root") ) {
+					res = st.executeUpdate("GRANT SELECT, UPDATE, INSERT, DELETE ON db2.* TO '"+login+"'@'localhost' IDENTIFIED BY '"+password+"';");
+					if (position.equals("Administrator")) {
+						res = st.executeUpdate("GRANT ALL PRIVILEGES ON db2.* TO '"+login+"'@'localhost' IDENTIFIED BY '"+password+"' WITH GRANT OPTION;");
+					}
+					if (level_accept.equals("Administrator")) {
+						res = st.executeUpdate("update db2.worker set password = '"+password+"' where login = '"+login+"';");
+					}
+					else {
+						res = st.executeUpdate("insert into db2.worker (name, surname, position, experience, login, password, subdividion_id) values('"
+								+ name + "','" + surname + "','" + position + "','" + experience + "','" + login + "','" + password + "','" + subdividion_id + "');");
+					}
+				}
+		        else {
 				res = st.executeUpdate("insert into db2.worker (name, surname, position, experience, login, password, subdividion_id) values('"
 						+ name + "','" + surname + "','" + position + "','" + experience + "','" + login + "','" + password + "','" + subdividion_id + "');");
+		        }
+				
 			} 
 			catch (SQLException e) {
 				res = 0;
@@ -473,12 +496,19 @@ public class Database {
 		return (res == 1);
 	}
 	//обновление данных
-	public boolean updWorker(Integer idworker, String name, String surname, String position, Integer experience, String login, String password, int subdividion_id) {
+	public boolean updWorker(Integer idworker, String name, String surname, String position, Integer experience, String login, String password, int subdividion_id) throws IOException {
 		int res = 0;
 		if (openConnection()) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
+				FileReader lvl= new FileReader("lvl");
+		        Scanner scan = new Scanner(lvl);
+		        String level_accept = scan.nextLine();
+		        lvl.close();
+		        if (level_accept.equals("Administrator")) {
+					res = st.executeUpdate("SET PASSWORD FOR '"+login+"'@'localhost' = PASSWORD('"+password+"');");
+				}
 				res = st.executeUpdate("update db2.worker set name ='"+name+"', surname = '"
 				+surname+"', position = '"+position+"', experience = '" + experience +"', login = '"+login+"', password = '"+password+"', subdividion_id = '"+subdividion_id+"' where idworker = '"+idworker+"';");
 			} 
@@ -502,13 +532,23 @@ public class Database {
 		return (res == 1);
 	}
 	//удаление рабочего
-	public boolean delWorker(Integer idworker) {
+	public boolean delWorker(Integer idworker, String login) throws IOException {
 		int res = 0;
 		if (openConnection()) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
-				res = st.executeUpdate("delete from db2.worker where idtechnic = '" + idworker + "';");
+				FileReader lvl= new FileReader("lvl");
+		        Scanner scan = new Scanner(lvl);
+		        String level_accept = scan.nextLine();
+		        lvl.close();
+		        if (level_accept.equals("Administrator")) {
+					res = st.executeUpdate("REVOKE ALL PRIVILEGES, GRANT OPTION FROM '"+login+"'@'localhost';");
+					res = st.executeUpdate("DROP USER '"+login+"'@'localhost';");
+				}
+		        else {
+		        	res = st.executeUpdate("delete from db2.worker where idtechnic = '" + idworker + "';");
+		        }
 			} 
 			catch (SQLException e) {
 				res = 0;
