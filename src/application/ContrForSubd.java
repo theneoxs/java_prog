@@ -81,7 +81,7 @@ public class ContrForSubd {
 	
 	//добавить новую запись в таблицу
 	@FXML
-	private void handleNew() {
+	private void handleNew() throws IOException{
 		if (isInputValid(1)) {
 			db.newSubd(tfFullName.getText(), tfShortName.getText());
 			tvSubd.setItems(FXCollections.observableArrayList(db.getAllSubd()));
@@ -89,7 +89,7 @@ public class ContrForSubd {
 	}
 	//удалить строчку с id n 
 	@FXML
-	private void handleDel() {
+	private void handleDel() throws IOException{
 		if (isInputValid(2)) {
 			db.delSubd(Integer.parseInt(tfIdSubd.getText()));
 			tvSubd.setItems(FXCollections.observableArrayList(db.getAllSubd()));
@@ -98,7 +98,7 @@ public class ContrForSubd {
 	  //обновить строку с id n на параметры
 	  
 	@FXML
-	private void handleUpd() {
+	private void handleUpd() throws IOException{
 		if (isInputValid(3)) {
 			db.updSubd(Integer.parseInt(tfIdSubd.getText()), tfFullName.getText(), tfShortName.getText());
 			tvSubd.setItems(FXCollections.observableArrayList(db.getAllSubd()));

@@ -100,10 +100,17 @@ public class SampleController {
 		
 		tvTech.setItems(FXCollections.observableArrayList(db.getAllTech())); //инициализаци€ динамического массива из элементов Tech и передача соответствующей информации в столбики
 		
-		tvTech.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showTechDetails(newValue)); //ѕрослушиватель нажати€ на табличку
+		tvTech.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			try {
+				showTechDetails(newValue);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}); //ѕрослушиватель нажати€ на табличку
 	}
 	//метод интерпритировани€ выбранного элемента таблицы по определенным €чейкам
-	private void showTechDetails(Tech cl) {
+	private void showTechDetails(Tech cl) throws IOException{
 		if (cl != null) {
 			tfIdTech.setText(Integer.toString(cl.getIdtechnic()));
 			tfName.setText(cl.getName());
@@ -128,7 +135,7 @@ public class SampleController {
 	
 	//добавить новую запись в таблицу
 	@FXML
-	private void handleNew() {
+	private void handleNew() throws IOException{
 		if (isInputValid(1)) {
 			db.newTech(tfName.getText(), tfModel.getText(), Date.valueOf(tfDate.getText()), Float.parseFloat(tfCost.getText()), 
 					Integer.parseInt(tfRoomNum.getText()), Integer.parseInt(cbMRID.getValue().substring(0, cbMRID.getValue().indexOf(" "))), 
@@ -138,7 +145,7 @@ public class SampleController {
 	}
 	//удалить строчку с id n 
 	@FXML
-	private void handleDel() {
+	private void handleDel() throws IOException{
 		if (isInputValid(2)) {
 			db.delTech(Integer.parseInt(tfIdTech.getText()));
 			tvTech.setItems(FXCollections.observableArrayList(db.getAllTech()));
@@ -147,7 +154,7 @@ public class SampleController {
 	  //обновить строку с id n на параметры
 	  
 	@FXML
-	private void handleUpd() {
+	private void handleUpd() throws IOException{
 		if (isInputValid(3)) {
 			db.updTech(Integer.parseInt(tfIdTech.getText()), tfName.getText(), tfModel.getText(), Date.valueOf(tfDate.getText()), Float.parseFloat(tfCost.getText()), 
 					Integer.parseInt(tfRoomNum.getText()), Integer.parseInt(cbMRID.getValue().substring(0, cbMRID.getValue().indexOf(" "))), 
@@ -288,7 +295,12 @@ public class SampleController {
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		    @Override
 		    public void handle(WindowEvent event) {
-		    	cblMRID = FXCollections.observableArrayList(db.listAllWork());
+		    	try {
+					cblMRID = FXCollections.observableArrayList(db.listAllWork());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		    	cbMRID.setItems(cblMRID);
 		    	cbMRID.setValue(cblMRID.get(0));
 		    }
@@ -310,7 +322,12 @@ public class SampleController {
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		    @Override
 		    public void handle(WindowEvent event) {
-		    	cblSID = FXCollections.observableArrayList(db.listAllSubd());
+		    	try {
+					cblSID = FXCollections.observableArrayList(db.listAllSubd());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		    	cbSID.setItems(cblSID);
 		    	cbSID.setValue(cblSID.get(0));
 

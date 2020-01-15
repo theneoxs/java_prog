@@ -23,14 +23,13 @@ public class Database {
 		this.conn = null;
 	}
 	// Открывает соединение. Возвращает true если открылось
-	public boolean openConnection() {
+	public boolean openConnection(String login, String password) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.conn = DriverManager.getConnection("jdbc:mysql://localhost/db2?user=root&password=admin");
+			this.conn = DriverManager.getConnection("jdbc:mysql://localhost/db2?user="+login+"&password="+password+"");
 		} 
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			System.out.println("SQL error: " + e.getMessage());
-			e.printStackTrace();
 			return false;
 		}
 		return true;
@@ -47,11 +46,17 @@ public class Database {
 	}
 	
 	// Получает информацию обо всех экземплярах техники
-	public List<Tech> getAllTech() {
+	public List<Tech> getAllTech() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		Statement st = null;
 		ResultSet rs = null;
 		List<Tech> lTech = new ArrayList<Tech>();
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.technic");
@@ -81,11 +86,17 @@ public class Database {
 		return lTech;
 	}
 	// Получает информацию обо всех подразделениях
-	public List<Subd> getAllSubd() {
+	public List<Subd> getAllSubd() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		Statement st = null;
 		ResultSet rs = null;
 		List<Subd> lS = new ArrayList<Subd>();
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.subdividion");
@@ -111,43 +122,56 @@ public class Database {
 		return lS;
 	}
 	// Получает информацию обо всех рабочих
-	public List<Worker> getAllWorker() {
-			Statement st = null;
-			ResultSet rs = null;
-			List<Worker> lS = new ArrayList<Worker>();
-			if (openConnection()) {
-				try {
-					st = conn.createStatement();
-					rs = st.executeQuery("select * from db2.worker");
-					while (rs.next()) {
-						lS.add(new Worker(rs.getInt("idworker"), rs.getString("name"), rs.getString("surname"), rs.getString("position"),rs.getInt("experience"), 
-								rs.getString("login"), rs.getString("password"), rs.getInt("subdividion_id")));
-					}
-				} catch (SQLException e) {
-
-					System.out.println("SQl exception: " + e.getMessage());
-					e.printStackTrace();
-					return null;
-				} finally {
-					try {
-						if (st != null)
-							st.close();
-						closeConnection();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-					st = null;
+	public List<Worker> getAllWorker() throws IOException {
+		FileReader lvl = new FileReader("lvl");
+		Scanner scan = new Scanner(lvl);
+		String level_accept = scan.nextLine();
+		String login = scan.nextLine();
+		String password = scan.nextLine();
+		lvl.close();
+		Statement st = null;
+		ResultSet rs = null;
+		List<Worker> lS = new ArrayList<Worker>();
+		if (openConnection(login, password)) {
+			try {
+				st = conn.createStatement();
+				rs = st.executeQuery("select * from db2.worker");
+				while (rs.next()) {
+					lS.add(new Worker(rs.getInt("idworker"), rs.getString("name"), rs.getString("surname"),
+							rs.getString("position"), rs.getInt("experience"), rs.getString("login"),
+							rs.getString("password"), rs.getInt("subdividion_id")));
 				}
+			} catch (SQLException e) {
+
+				System.out.println("SQl exception: " + e.getMessage());
+				e.printStackTrace();
+				return null;
+			} finally {
+				try {
+					if (st != null)
+						st.close();
+					closeConnection();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				st = null;
 			}
-			return lS;
 		}
+		return lS;
+	}
 
 	// Получает информацию обо всех транспортировках
-	public List<Transportation> getAllTr() {
+	public List<Transportation> getAllTr() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		Statement st = null;
 		ResultSet rs = null;
 		List<Transportation> lS = new ArrayList<Transportation>();
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.transportation");
@@ -174,11 +198,17 @@ public class Database {
 		return lS;
 	}
 	//список рабочих
-	public List<String> listAllWork() {
+	public List<String> listAllWork() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		Statement st = null;
 		ResultSet rs = null;
 		List<String> lWork = new ArrayList<String>();
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.worker");
@@ -207,11 +237,17 @@ public class Database {
 		return lWork;
 	}
 	//список техники
-	public List<String> listAllTech() {
+	public List<String> listAllTech() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 			Statement st = null;
 			ResultSet rs = null;
 			List<String> lWork = new ArrayList<String>();
-			if (openConnection()) {
+			if (openConnection(login, password)) {
 				try {
 					st = conn.createStatement();
 					rs = st.executeQuery("select * from db2.technic");
@@ -240,11 +276,17 @@ public class Database {
 			return lWork;
 		}
 	//список подразделений
-	public List<String> listAllSubd() {
+	public List<String> listAllSubd() throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		Statement st = null;
 		ResultSet rs = null;
 		List<String> ls = new ArrayList<String>();
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.subdividion");
@@ -273,9 +315,15 @@ public class Database {
 		return ls;
 	}
 	//создание нового экземпляра техники
-	public boolean newTech(String name, String model, Date date, float cost, int room_num, int mat_resp_id, int subdividion_id) {
+	public boolean newTech(String name, String model, Date date, float cost, int room_num, int mat_resp_id, int subdividion_id) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -303,9 +351,15 @@ public class Database {
 		return (res == 1);
 	}
 	//обновление данных
-	public boolean updTech(Integer idtechnic, String name, String model, Date date, Float cost, Integer room_num, Integer mat_resp_id, Integer subdividion_id) {
+	public boolean updTech(Integer idtechnic, String name, String model, Date date, Float cost, Integer room_num, Integer mat_resp_id, Integer subdividion_id) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -332,9 +386,15 @@ public class Database {
 		return (res == 1);
 	}
 	//удаление техники
-	public boolean delTech(Integer idtechnic) {
+	public boolean delTech(Integer idtechnic) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -360,9 +420,15 @@ public class Database {
 		return (res == 1);
 	}
 	//создание нового подразделения
-	public boolean newSubd(String fname, String shname) {
+	public boolean newSubd(String fname, String shname) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -390,9 +456,15 @@ public class Database {
 		return (res == 1);
 	}
 	//обновление данных подразделений
-	public boolean updSubd(Integer idsubd, String fname, String shname) {
+	public boolean updSubd(Integer idsubd, String fname, String shname) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -418,9 +490,15 @@ public class Database {
 		return (res == 1);
 	}
 	//удаление подразделения
-	public boolean delSubd(Integer idsubd) {
+	public boolean delSubd(Integer idsubd) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -447,33 +525,40 @@ public class Database {
 	}
 	//Создание нового рабочего
 	public boolean newWorker(String name, String surname, String position, Integer experience, String login, String password, int subdividion_id) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login2 = scan.nextLine();
+        String password2 = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login2, password2)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
-				FileReader lvl= new FileReader("lvl");
-		        Scanner scan = new Scanner(lvl);
-		        String level_accept = scan.nextLine();
-		        lvl.close();
-		        if (level_accept.equals("Administrator") || level_accept.equals("root") ) {
-					res = st.executeUpdate("GRANT SELECT, UPDATE, INSERT, DELETE ON db2.* TO '"+login+"'@'localhost' IDENTIFIED BY '"+password+"';");
+				if (level_accept.equals("Administrator") || level_accept.equals("root")) {
+					res = st.executeUpdate("GRANT SELECT, UPDATE, INSERT, DELETE ON db2.* TO '" + login
+							+ "'@'localhost' IDENTIFIED BY '" + password + "';");
 					if (position.equals("Administrator")) {
-						res = st.executeUpdate("GRANT ALL PRIVILEGES ON db2.* TO '"+login+"'@'localhost' IDENTIFIED BY '"+password+"' WITH GRANT OPTION;");
+						res = st.executeUpdate("GRANT ALL PRIVILEGES ON *.* TO '" + login
+								+ "'@'localhost' IDENTIFIED BY '" + password + "' WITH GRANT OPTION;");
 					}
 					if (level_accept.equals("Administrator")) {
-						res = st.executeUpdate("update db2.worker set password = '"+password+"' where login = '"+login+"';");
+						res = st.executeUpdate(
+								"update db2.worker set password = '" + password + "' where login = '" + login + "';");
+					} else {
+						res = st.executeUpdate(
+								"insert into db2.worker (name, surname, position, experience, login, password, subdividion_id) values('"
+										+ name + "','" + surname + "','" + position + "','" + experience + "','" + login
+										+ "','" + password + "','" + subdividion_id + "');");
 					}
-					else {
-						res = st.executeUpdate("insert into db2.worker (name, surname, position, experience, login, password, subdividion_id) values('"
-								+ name + "','" + surname + "','" + position + "','" + experience + "','" + login + "','" + password + "','" + subdividion_id + "');");
-					}
+				} else {
+					res = st.executeUpdate(
+							"insert into db2.worker (name, surname, position, experience, login, password, subdividion_id) values('"
+									+ name + "','" + surname + "','" + position + "','" + experience + "','" + login
+									+ "','" + password + "','" + subdividion_id + "');");
 				}
-		        else {
-				res = st.executeUpdate("insert into db2.worker (name, surname, position, experience, login, password, subdividion_id) values('"
-						+ name + "','" + surname + "','" + position + "','" + experience + "','" + login + "','" + password + "','" + subdividion_id + "');");
-		        }
-				
+
 			} 
 			catch (SQLException e) {
 				res = 0;
@@ -497,15 +582,17 @@ public class Database {
 	}
 	//обновление данных
 	public boolean updWorker(Integer idworker, String name, String surname, String position, Integer experience, String login, String password, int subdividion_id) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login2 = scan.nextLine();
+        String password2 = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login2, password2)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
-				FileReader lvl= new FileReader("lvl");
-		        Scanner scan = new Scanner(lvl);
-		        String level_accept = scan.nextLine();
-		        lvl.close();
 		        if (level_accept.equals("Administrator")) {
 					res = st.executeUpdate("SET PASSWORD FOR '"+login+"'@'localhost' = PASSWORD('"+password+"');");
 				}
@@ -533,15 +620,17 @@ public class Database {
 	}
 	//удаление рабочего
 	public boolean delWorker(Integer idworker, String login) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login2 = scan.nextLine();
+        String password2 = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login2, password2)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
-				FileReader lvl= new FileReader("lvl");
-		        Scanner scan = new Scanner(lvl);
-		        String level_accept = scan.nextLine();
-		        lvl.close();
 		        if (level_accept.equals("Administrator")) {
 					res = st.executeUpdate("REVOKE ALL PRIVILEGES, GRANT OPTION FROM '"+login+"'@'localhost';");
 					res = st.executeUpdate("DROP USER '"+login+"'@'localhost';");
@@ -570,9 +659,15 @@ public class Database {
 		return (res == 1);
 	}
 	//Создание новой транспортировки
-	public boolean newTr(Date date_transportation, String status, int new_mat_resp, int technic_id, int new_subdividion_id) {
+	public boolean newTr(Date date_transportation, String status, int new_mat_resp, int technic_id, int new_subdividion_id) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -600,9 +695,15 @@ public class Database {
 		return (res == 1);
 	}
 	//обновление данных
-	public boolean updTr(Integer idtransportation, Date date_transportation, String status, int new_mat_resp, int technic_id, int new_subdividion_id) {
+	public boolean updTr(Integer idtransportation, Date date_transportation, String status, int new_mat_resp, int technic_id, int new_subdividion_id) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -629,9 +730,15 @@ public class Database {
 		return (res == 1);
 	}
 	//удаление техники
-	public boolean delTr(Integer idtransportation) {
+	public boolean delTr(Integer idtransportation) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		int res = 0;
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			Statement st = null;
 			try {
 				st = conn.createStatement();
@@ -657,11 +764,17 @@ public class Database {
 		return (res == 1);
 	}
 
-	public String getTech(int i) {
+	public String getTech(int i) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		Statement st = null;
 		ResultSet rs = null;
 		String ls = "";
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.technic where idtechnic = '"+ i + "';");
@@ -689,11 +802,17 @@ public class Database {
 		}
 		return ls;
 	}
-	public String getSubd(int i) {
+	public String getSubd(int i) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		Statement st = null;
 		ResultSet rs = null;
 		String ls = "";
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.subdividion where idsubdividion = '"+ i + "';");
@@ -721,11 +840,17 @@ public class Database {
 		}
 		return ls;
 	}
-	public String getWorker(int i) {
+	public String getWorker(int i) throws IOException {
+		FileReader lvl= new FileReader("lvl");
+        Scanner scan = new Scanner(lvl);
+        String level_accept = scan.nextLine();
+        String login = scan.nextLine();
+        String password = scan.nextLine();
+        lvl.close();
 		Statement st = null;
 		ResultSet rs = null;
 		String ls = "";
-		if (openConnection()) {
+		if (openConnection(login, password)) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.worker where idworker = '"+ i + "';");
@@ -758,7 +883,7 @@ public class Database {
 		ResultSet rs = null;
 		String ls = "";
 		String lvl = "";
-		if (openConnection()) {
+		if (openConnection("root", "admin")) {
 			try {
 				st = conn.createStatement();
 				rs = st.executeQuery("select * from db2.worker where login = '"+ login + "';");
@@ -787,7 +912,9 @@ public class Database {
 		}
 		if (ls.equals(password)) {
 			FileWriter file = new FileWriter("lvl");
-			file.write(lvl);
+			file.write(lvl+"\n");
+			file.write(login+"\n");
+			file.write(ls+"\n");
 			file.close();
 			return true;
 		}

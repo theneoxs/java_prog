@@ -120,10 +120,16 @@ public class ContrForWorker {
 		tcSubDivID.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("subdividion_id")); //8 столбик
 		tvWorker.setItems(FXCollections.observableArrayList(db.getAllWorker())); //инициализация динамического массива из элементов Tech и передача соответствующей информации в столбики
 		
-		tvWorker.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showWorkerDetails(newValue)); //Прослушиватель нажатия на табличку
+		tvWorker.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			try {
+				showWorkerDetails(newValue);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}); //Прослушиватель нажатия на табличку
 	}
 	//метод интерпритирования выбранного элемента таблицы по определенным ячейкам
-	private void showWorkerDetails(Worker cl) {
+	private void showWorkerDetails(Worker cl) throws IOException{
 		if (cl != null) {
 			tfIdWorker.setText(Integer.toString(cl.getIdworker()));
 			tfName.setText(cl.getName());
@@ -285,7 +291,11 @@ public class ContrForWorker {
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		    @Override
 		    public void handle(WindowEvent event) {
-		    	cblSID = FXCollections.observableArrayList(db.listAllSubd());
+		    	try {
+					cblSID = FXCollections.observableArrayList(db.listAllSubd());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		    	cbSID.setItems(cblSID);
 		    	cbSID.setValue(cblSID.get(0));
 

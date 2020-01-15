@@ -2,6 +2,7 @@ package application;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
 import java.sql.Date;
 
 import org.junit.jupiter.api.AfterEach;
@@ -16,7 +17,7 @@ class TestDB {
 	@BeforeEach
 	void init() {
 		db = new Database();
-		db.openConnection();
+		db.openConnection("root", "admin");
 	}
 
 	@AfterEach
@@ -27,7 +28,7 @@ class TestDB {
 
 	@Test
 	@DisplayName("TEST 1")
-	void insertTech() {
+	void insertTech() throws IOException{
 		assertEquals(db.newTech("Aaaa", "Vvvv", Date.valueOf("2018-01-01"), Float.parseFloat("0.432"), 25, 1, 1), true);
 	}
 }

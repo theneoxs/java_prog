@@ -88,10 +88,16 @@ public class ContrForTr {
 		
 		tvTr.setItems(FXCollections.observableArrayList(db.getAllTr())); //инициализаци€ динамического массива из элементов Subd и передача соответствующей информации в столбики
 		
-		tvTr.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showTrDetails(newValue)); //ѕрослушиватель нажати€ на табличку
+		tvTr.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			try {
+				showTrDetails(newValue);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}); //ѕрослушиватель нажати€ на табличку
 	}
 	//метод интерпритировани€ выбранного элемента таблицы по определенным €чейкам
-	private void showTrDetails(Transportation cl) {
+	private void showTrDetails(Transportation cl) throws IOException {
 		if (cl != null) {
 			tfIdTr.setText(Integer.toString(cl.getIdtransportation()));
 			tfDate_Tr.setText(cl.getDate_transportation().toString());
@@ -111,7 +117,7 @@ public class ContrForTr {
 	
 	//добавить новую запись в таблицу
 	@FXML
-	private void handleNew() {
+	private void handleNew() throws IOException {
 		if (isInputValid(1)) {
 			db.newTr(Date.valueOf(tfDate_Tr.getText()), cbStatus.getValue(), Integer.parseInt(cbNew_mat_resp.getValue().substring(0, cbNew_mat_resp.getValue().indexOf(" "))),
 					Integer.parseInt(cbtechnic_id.getValue().substring(0, cbtechnic_id.getValue().indexOf(" "))),
@@ -121,7 +127,7 @@ public class ContrForTr {
 	}
 	//удалить строчку с id n 
 	@FXML
-	private void handleDel() {
+	private void handleDel() throws IOException{
 		if (isInputValid(2)) {
 			db.delTr(Integer.parseInt(tfIdTr.getText()));
 			tvTr.setItems(FXCollections.observableArrayList(db.getAllTr()));
@@ -130,7 +136,7 @@ public class ContrForTr {
 	  //обновить строку с id n на параметры
 	  
 	@FXML
-	private void handleUpd() {
+	private void handleUpd() throws IOException {
 		if (isInputValid(3)) {
 			db.updTr(Integer.parseInt(tfIdTr.getText()), Date.valueOf(tfDate_Tr.getText()), cbStatus.getValue(), Integer.parseInt(cbNew_mat_resp.getValue().substring(0, cbNew_mat_resp.getValue().indexOf(" "))),
 					Integer.parseInt(cbtechnic_id.getValue().substring(0, cbtechnic_id.getValue().indexOf(" "))),
